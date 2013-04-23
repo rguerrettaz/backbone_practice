@@ -26,6 +26,8 @@ class TutorialsController < ApplicationController
 end
 
 
+ # Leaving this here to ask instructor about above refactor
+ 
  # def vote
  #    tutorial_id = params[:format].to_i
  #    vote_value = params[:type] == "up" ? 1 : -1
