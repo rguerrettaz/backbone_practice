@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   before_save :downcase_email
 
   has_many :tutorials
+  has_many :votes
 
   validates :username, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
