@@ -17,5 +17,12 @@ class ApplicationController < ActionController::Base
   def vote_value(vote_type)
     vote_type == "up" ? 1 : -1
   end
+
+  def vote_count(tutorial)
+    sum = 0
+    tutorial.votes.each {|vote| sum += vote.value}
+    return sum
+  end
     
+  helper_method :vote_count
 end

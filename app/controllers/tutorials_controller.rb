@@ -1,4 +1,5 @@
 class TutorialsController < ApplicationController
+  respond_to :js, :html
 
   def new
     @tutorial = Tutorial.new
@@ -20,14 +21,15 @@ class TutorialsController < ApplicationController
   end
 
   def vote
-    create_or_update_vote(Tutorial.find(params[:format].to_i), vote_value(params[:type]))
-    redirect_to :back
+    @tutorial = Tutorial.find(params[:format].to_i)
+    create_or_update_vote(@tutorial, vote_value(params[:type]))
+    render json: { vote_count: vote_count(@tutorial) }
   end
 end
 
 
  # Leaving this here to ask instructor about above refactor
- 
+
  # def vote
  #    tutorial_id = params[:format].to_i
  #    vote_value = params[:type] == "up" ? 1 : -1
