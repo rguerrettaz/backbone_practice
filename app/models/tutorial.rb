@@ -1,0 +1,8 @@
+class Tutorial < ActiveRecord::Base
+  attr_accessible :content, :title
+
+  belongs_to :user
+
+  validates :title, presence: true
+  validates :content, presence: true
+end

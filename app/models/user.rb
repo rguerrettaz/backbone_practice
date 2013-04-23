@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   has_secure_password
   before_save :downcase_email
 
+  has_many :tutorials
+
   validates :username, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true
