@@ -18,22 +18,13 @@ class TutorialsController < ApplicationController
 
   def show
     @tutorial = Tutorial.find(params[:id])
+    @score =  score(@tutorial)
   end
 
   def vote
-    @tutorial = Tutorial.find(params[:format].to_i)
-    create_or_update_vote(@tutorial, vote_value(params[:type]))
-    render json: { vote_count: vote_count(@tutorial) }
+    @tutorial = Tutorial.find(params[:id])
+    create_or_update_vote(@tutorial, params[:type])
+
+    render json: { vote_count: score(@tutorial) }
   end
 end
-
-
- # Leaving this here to ask instructor about above refactor
-
- # def vote
- #    tutorial_id = params[:format].to_i
- #    vote_value = params[:type] == "up" ? 1 : -1
- #    @tutorial = Tutorial.find(tutorial_id)
- #    create_or_update_vote(@tutorial, vote_value)
- #    redirect_to :back
- #  end

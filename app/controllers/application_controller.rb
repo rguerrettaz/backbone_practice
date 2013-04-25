@@ -1,28 +1,37 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   include SessionsHelper
-
   # Force signout to prevent CSRF attacks
   def handle_unverified_request
     sign_out
     super
   end
 
-  def create_or_update_vote(tutorial, value)
-    vote = tutorial.votes.find_or_create_by_tutorial_id_and_user_id(tutorial.id, current_user.id)
-    vote.value = value
+  def create_or_update_vote(tutorial, vote_type)
+    vote = tutorial.votes.find_or_create_by_tutorial_id_and_voter_id(tutorial.id, current_user.id)
+    vote.vote_type = vote_type
     vote.save
   end
 
-  def vote_value(vote_type)
-    vote_type == "up" ? 1 : -1
+  # Needs to come out of the application controller and go into # the score module. Need help doing this.
+  UPVOTE_WEIGHT = 1
+  DOWNVOTE_WEIGHT = -1
+
+  def score(tutorial)
+    score_votes(get_votes(tutorial))
   end
 
-  def vote_count(tutorial)
-    sum = 0
-    tutorial.votes.each {|vote| sum += vote.value}
-    return sum
+  def get_votes(tutorial)
+    tutorial.votes
   end
-    
-  helper_method :vote_count
+
+  def score_votes(votes)
+    votes.map(&method(:weight)).inject(:+)
+  end
+
+  def weight(vote)
+    vote.vote_type == "up" ? UPVOTE_WEIGHT : DOWNVOTE_WEIGHT
+  end
+
+  # helper_method :Score.instance_methods
 end

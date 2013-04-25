@@ -5,7 +5,7 @@ var Vote = {
 
   updateVoteCount: function(event, data) {
     var $vote_count = data.vote_count
-    $(".total-votes").text("" + $vote_count + " " + pluralize($vote_count, "vote") + "" );  
+    $(".total-votes").text("" + $vote_count + " " + pluralize($vote_count, "vote"));  
   },
 }
 

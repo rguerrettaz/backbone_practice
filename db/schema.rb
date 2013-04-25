@@ -30,8 +30,8 @@ ActiveRecord::Schema.define(:version => 20130423033144) do
   end
 
   create_table "votes", :force => true do |t|
-    t.integer  "value"
-    t.integer  "user_id"
+    t.string   "vote_type"
+    t.integer  "voter_id"
     t.integer  "tutorial_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false

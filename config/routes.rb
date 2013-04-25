@@ -4,8 +4,8 @@ VotingApp::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :tutorials, only: [:new, :create, :show]
 
-  match '/signup', to: 'users#new'
-  match '/login', to: 'sessions#new'
+  match '/signup', to: 'users#new', via: :get
+  match '/login', to: 'sessions#new', via: :get
   match '/logout', to: 'sessions#destroy', via: :delete
-  match '/vote', to: 'tutorials#vote', via: :post
+  match '/tutorials/:id/vote', to: 'tutorials#vote', via: :post, as: :vote
 end

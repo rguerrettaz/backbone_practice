@@ -1,7 +1,6 @@
 <h1><%= @tutorial.title %></h1>
 
-<%= link_to "up", vote_path(@tutorial, type: "up" ), remote: true, method: "post", class: "vote" %>
-<%= link_to "down", vote_path(@tutorial, type: "down" ), remote: true, method: "post", class: "vote" %>
-<span class="total-votes"><%= pluralize(vote_count(@tutorial), "vote") %></span>
-
+<%= link_to "up", vote_path(type: "up" ), remote: true, method: "post", class: "vote" %>
+<%= link_to "down", vote_path(type: "down" ), remote: true, method: "post", class: "vote" %>
+<span class="total-votes"><%= pluralize(@score, "vote") %></span>
 <p><%= @tutorial.content %></p>
