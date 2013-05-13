@@ -29,7 +29,7 @@ tutorial.save
 //Give a model default values
 var User = Backbone.Model.extend({
   defaults: {
-    username: "AnonymousUser",
+    username: "AnonymousUser"
   }
 })
 
