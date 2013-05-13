@@ -25,10 +25,10 @@ class TutorialsController < ApplicationController
   end
 
   def vote
-    @tutorial = Tutorial.find(params[:id])
-    create_or_update_vote(@tutorial, params[:type])
     # Resets cache for tutorial/:id
     expire_page action: :show
+    @tutorial = Tutorial.find(params[:id])
+    create_or_update_vote(@tutorial, params[:type])
     render json: { vote_count: score(@tutorial) }
   end
 end
