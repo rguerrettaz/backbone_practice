@@ -8,9 +8,15 @@ class ApplicationController < ActionController::Base
   end
 
   def create_or_update_vote(tutorial, vote_type)
-    vote = tutorial.votes.find_or_create_by_tutorial_id_and_voter_id(tutorial.id, current_user.id)
-    vote.vote_type = vote_type
-    vote.save
+    vote = tutorial.cached_vote?(vote_type, current_user.id)
+
+    unless vote
+      vote = tutorial.votes.find_or_create_by_tutorial_id_and_voter_id(tutorial.id, current_user.id)
+      vote.vote_type = vote_type
+      vote.save
+      vote.cache
+    end
+    return vote
   end
 
   # Needs to come out of the application controller and go into # the score module. Need help doing this.
@@ -22,7 +28,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_votes(tutorial)
-    tutorial.votes
+    tutorial.cached_votes
   end
 
   def score_votes(votes)

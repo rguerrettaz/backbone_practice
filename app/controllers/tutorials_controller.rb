@@ -1,6 +1,5 @@
 class TutorialsController < ApplicationController
   respond_to :js, :html
-  # caches_page :show
 
   def new
     @tutorial = Tutorial.new
@@ -9,8 +8,6 @@ class TutorialsController < ApplicationController
   def create
     tutorial = Tutorial.new(params[:tutorial])
     tutorial.user = current_user
-    # Resets cache for index page
-    # expire_page action: :index, controller: "static_pages"
     if tutorial.save
       flash[:success] = 'Tutorial created successfully!'
       redirect_to tutorial
@@ -20,14 +17,12 @@ class TutorialsController < ApplicationController
   end
 
   def show
-    @tutorial = Tutorial.find(params[:id])
+    @tutorial = Tutorial.cached_find(params[:id])
     @score =  score(@tutorial)
   end
 
   def vote
-    # Resets cache for tutorial/:id
-    # expire_page action: :show
-    @tutorial = Tutorial.find(params[:id])
+    @tutorial = Tutorial.cached_find(params[:id])
     create_or_update_vote(@tutorial, params[:type])
     render json: { vote_count: score(@tutorial) }
   end
