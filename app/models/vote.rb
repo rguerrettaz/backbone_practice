@@ -8,6 +8,7 @@ class Vote < ActiveRecord::Base
 
   def flush_cache
     Rails.cache.delete([tutorial_id, voter_id])
+    self.cache
   end
 
   def cache
