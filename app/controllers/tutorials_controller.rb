@@ -1,5 +1,6 @@
 class TutorialsController < ApplicationController
   respond_to :js, :html
+  include VotesHelper
 
   def new
     @tutorial = Tutorial.new
@@ -22,8 +23,8 @@ class TutorialsController < ApplicationController
   end
 
   def vote
-    @tutorial = Tutorial.cached_find(params[:id])
-    create_or_update_vote(@tutorial, params[:type])
-    render json: { vote_count: score(@tutorial) }
+    tutorial = Tutorial.cached_find(params[:id])
+    vote_checker(tutorial, params[:type])
+    render json: { vote_count: score(tutorial) }
   end
 end
