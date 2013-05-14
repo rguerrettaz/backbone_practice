@@ -9,12 +9,9 @@ class TutorialsController < ApplicationController
   def create
     tutorial = Tutorial.new(params[:tutorial])
     tutorial.user = current_user
-    if tutorial.save
-      flash[:success] = 'Tutorial created successfully!'
-      redirect_to tutorial
-    else
-      render new_tutorial_root
-    end
+    redirect_to new_tutorial_path and return unless tutorial.save
+    flash[:success] = 'Tutorial created successfully!'
+    redirect_to tutorial
   end
 
   def show
@@ -27,4 +24,5 @@ class TutorialsController < ApplicationController
     vote_checker(tutorial, params[:type])
     render json: { vote_count: score(tutorial) }
   end
+
 end

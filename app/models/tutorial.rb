@@ -22,7 +22,6 @@ class Tutorial < ActiveRecord::Base
   end
 
   def cached_votes
-    # p Rails.cache.fetch([self, id]) { self.votes }
     @votes ||= self.votes
   end
 

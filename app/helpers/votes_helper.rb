@@ -29,6 +29,8 @@ module VotesHelper
     tutorial.votes.find_or_initialize_by_tutorial_id_and_voter_id(tutorial.id, current_user.id).tap do |v|
       v.vote_type = vote_type
     end.save!
+
+
   end
 
 end
